@@ -1,0 +1,13 @@
+plugins {
+    id 'scala'
+    id 'io.gatling.gradle' version '3.8.4'
+}
+
+gatling {
+    logLevel = 'WARN'
+    logHttp = 'FAILURES'
+}
+
+repositories {
+    mavenCentral()
+}

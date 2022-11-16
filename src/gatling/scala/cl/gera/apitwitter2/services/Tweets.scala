@@ -1,9 +1,9 @@
 package cl.gera.apitwitter2.services
 
-import cl.gera.apitwitter2.shared.Service
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
+import cl.gera.apitwitter2.shared.Service
 
 object Tweets extends Service {
   override val path: String = "/tweets"

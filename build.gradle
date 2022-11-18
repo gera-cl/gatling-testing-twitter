@@ -11,3 +11,15 @@ gatling {
 repositories {
     mavenCentral()
 }
+
+dependencies {
+    gatling 'com.goterl:lazysodium-java:5.1.1'
+    gatling "net.java.dev.jna:jna:5.12.1"
+}
+
+task runAuthApp(type: JavaExec) {
+    group = "Auth"
+    description = "Run app for Twitter authentication"
+    classpath = sourceSets.gatling.runtimeClasspath
+    main = "cl.gera.apitwitter2.auth.AuthApp"
+}

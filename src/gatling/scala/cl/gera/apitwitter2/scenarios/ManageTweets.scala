@@ -1,9 +1,9 @@
 package cl.gera.apitwitter2.scenarios
 
-import cl.gera.apitwitter2.services.Tweets
-import cl.gera.apitwitter2.shared.Bodies
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
+import cl.gera.apitwitter2.core.Bodies
+import cl.gera.apitwitter2.services.Tweets
 
 object ManageTweets {
   val createAndDeleteTweet: ScenarioBuilder = {

@@ -1,4 +1,4 @@
-package cl.gera.apitwitter2.shared
+package cl.gera.apitwitter2.core
 
 import java.nio.file.{Path, Paths}
 

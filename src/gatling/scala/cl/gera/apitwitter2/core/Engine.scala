@@ -1,4 +1,4 @@
-package cl.gera.apitwitter2.shared
+package cl.gera.apitwitter2.core
 
 import io.gatling.app.Gatling
 import io.gatling.core.config.GatlingPropertiesBuilder

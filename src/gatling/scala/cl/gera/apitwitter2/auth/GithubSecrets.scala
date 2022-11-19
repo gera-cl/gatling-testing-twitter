@@ -7,9 +7,8 @@ import java.net.http.{HttpClient, HttpRequest}
 
 object GithubSecrets {
   private val baseUrl = Properties.Github.baseUrl
-  private val owner = Properties.Github.owner
   private val repo = Properties.Github.repo
-  private val path = s"/repos/$owner/$repo/actions"
+  private val path = s"/repos/$repo/actions"
   private val httpClient = HttpClient.newBuilder().build()
 
   def createOrModifySecret(secretName: String, secretValue: String, keyId: String): Unit = {

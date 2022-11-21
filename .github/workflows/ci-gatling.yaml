@@ -27,6 +27,7 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: runAuthApp > authApp.out
+      - name: Update Twitter env vars
         run: | 
           echo "TW_ACCESS_TOKEN=$(grep 'TwitterTokens' authApp.out  | perl -lpe 's/^TwitterTokens\((.*),(.*)\)/$1/')" >> $GITHUB_ENV
           echo "TW_REFRESH_TOKEN=$(grep 'TwitterTokens' authApp.out  | perl -lpe 's/^TwitterTokens\((.*),(.*)\)/$2/')" >> $GITHUB_ENV

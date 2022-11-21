@@ -24,10 +24,10 @@ jobs:
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
       - name: Twitter authentication
-        run: ./gradlew runAuthApp > authApp.out
+        run: ./gradlew runAuthApp
       - name: Update Twitter env vars
-        run: | 
-          echo "TW_ACCESS_TOKEN=$(grep 'TwitterTokens' authApp.out  | perl -lpe 's/^TwitterTokens\((.*),(.*)\)/$1/')" >> $GITHUB_ENV
-          echo "TW_REFRESH_TOKEN=$(grep 'TwitterTokens' authApp.out  | perl -lpe 's/^TwitterTokens\((.*),(.*)\)/$2/')" >> $GITHUB_ENV
+        run: |
+          echo "TW_ACCESS_TOKEN=$(cat tw_access_token)" >> $GITHUB_ENV
+          echo "TW_REFRESH_TOKEN=$(cat tw_refresh_token)" >> $GITHUB_ENV
       - name: Run Gatling Tests
         run: ./gradlew gatlingRun-cl.gera.apitwitter2.simulations.ManageTweetsSimulation

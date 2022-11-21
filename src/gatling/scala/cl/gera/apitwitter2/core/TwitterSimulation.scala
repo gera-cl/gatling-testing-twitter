@@ -8,4 +8,6 @@ class TwitterSimulation extends Simulation {
   val httpProtocol: HttpProtocolBuilder = http
     .baseUrl(Properties.Twitter.baseUrl)
     .authorizationHeader(s"Bearer ${Properties.Twitter.access_token}")
+
+  val assertions: Assertion = global.successfulRequests.percent.is(100.0)
 }

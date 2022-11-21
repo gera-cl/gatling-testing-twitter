@@ -5,5 +5,7 @@ import cl.gera.apitwitter2.core.TwitterSimulation
 import cl.gera.apitwitter2.scenarios.ManageTweets
 
 class ManageTweetsSimulation extends TwitterSimulation {
-  setUp(ManageTweets.createAndDeleteTweet.inject(atOnceUsers(1))).protocols(httpProtocol)
+  setUp(ManageTweets.createAndDeleteTweet.inject(atOnceUsers(1)))
+    .assertions(assertions)
+    .protocols(httpProtocol)
 }

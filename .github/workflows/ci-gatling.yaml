@@ -21,16 +21,13 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Set up Gradle
+        uses: gradle/gradle-build-action@v3
       - name: Twitter authentication
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-        run: gradlew runAuthApp > authApp.out
+        run: ./gradlew runAuthApp > authApp.out
       - name: Update Twitter env vars
         run: | 
           echo "TW_ACCESS_TOKEN=$(grep 'TwitterTokens' authApp.out  | perl -lpe 's/^TwitterTokens\((.*),(.*)\)/$1/')" >> $GITHUB_ENV
           echo "TW_REFRESH_TOKEN=$(grep 'TwitterTokens' authApp.out  | perl -lpe 's/^TwitterTokens\((.*),(.*)\)/$2/')" >> $GITHUB_ENV
       - name: Run Gatling Tests
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-        with:
-          arguments: gatlingRun-cl.gera.apitwitter2.simulations.ManageTweetsSimulation
+        run: ./gradlew gatlingRun-cl.gera.apitwitter2.simulations.ManageTweetsSimulation

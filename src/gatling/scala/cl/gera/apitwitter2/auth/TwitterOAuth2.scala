@@ -37,11 +37,11 @@ object TwitterOAuth2 {
     val response = httpClient.send(request, BodyHandlers.ofString())
     // Validate status code
     val statusCode = response.statusCode()
+    val responseBodyAsString = response.body()
     if (statusCode != 200)
-      throw new RuntimeException(s"Unexpected status $statusCode in Twitter authentication")
+      throw new RuntimeException(s"Unexpected status $statusCode in Twitter authentication.\n(response body: $responseBodyAsString)")
 
     // Parse response body
-    val responseBodyAsString = response.body()
     val mapper = new ObjectMapper
     val responseBody = mapper.readTree(responseBodyAsString)
     val access_token = responseBody.get("access_token").textValue()

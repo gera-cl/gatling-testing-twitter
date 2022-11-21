@@ -23,7 +23,8 @@ object GithubSecrets {
       .build()
     val response = httpClient.send(request, BodyHandlers.ofString())
     val statusCode = response.statusCode()
+    val responseBodyAsString = response.body()
     if (!Array(201, 204).contains(statusCode))
-      throw new RuntimeException(s"Unexpected status $statusCode creating Github Secret")
+      throw new RuntimeException(s"Unexpected status $statusCode creating Github Secret.\n(response body: $responseBodyAsString)")
   }
 }

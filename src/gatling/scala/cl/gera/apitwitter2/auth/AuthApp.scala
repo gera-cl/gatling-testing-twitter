@@ -22,5 +22,8 @@ object AuthApp {
     // Refresh token
     encryptedSecret = SodiumHelper.encrypt(twitterTokens.refresh_token, githubPublicKey.value)
     GithubSecrets.createOrModifySecret(twitterRefreshToken.name, encryptedSecret, githubPublicKeyId.value)
+
+    // Print tokens
+    println(twitterTokens)
   }
 }

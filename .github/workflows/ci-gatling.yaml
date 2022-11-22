@@ -1,6 +1,6 @@
 name: Gatling CI
 
-on: [ push ]
+on: [ workflow_dispatch ]
 
 jobs:
   gatling-test:

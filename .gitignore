@@ -388,3 +388,8 @@ gradle-app.setting
 
 # Ignore Gradle build output directory
 build
+
+### Extra ###
+.env
+tw_access_token
+tw_refresh_token

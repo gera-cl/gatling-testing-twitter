@@ -27,4 +27,12 @@ object Tweets extends Service {
         jsonPath("""$.data.deleted""").ofType[Boolean].is(true)
       )
   }
+
+  def getTweetById(tweetId: String): HttpRequestBuilder = {
+    http("Tweet lookup")
+      .get(s"$path/$tweetId")
+      .check(
+        status.is(200)
+      )
+  }
 }

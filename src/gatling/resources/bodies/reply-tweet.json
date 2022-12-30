@@ -1,0 +1,6 @@
+{
+  "text": "#{tweetText}",
+  "reply": {
+    "in_reply_to_tweet_id": "#{targetTweetId}"
+  }
+}

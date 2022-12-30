@@ -30,4 +30,4 @@ jobs:
           echo "TW_ACCESS_TOKEN=$(cat tw_access_token)" >> $GITHUB_ENV
           echo "TW_REFRESH_TOKEN=$(cat tw_refresh_token)" >> $GITHUB_ENV
       - name: Run Gatling Tests
-        run: ./gradlew gatlingRun-cl.gera.apitwitter2.simulations.ManageTweetsSimulation
+        run: ./gradlew gatlingRun-cl.gera.apitwitter2.simulations.BasicSimulation

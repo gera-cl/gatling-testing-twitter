@@ -1,0 +1,7 @@
+{
+  "text": "#{tweetText}",
+  "poll": {
+    "options": ["Lorem", "ipsum", "dolor"],
+    "duration_minutes": 5
+  }
+}

@@ -24,12 +24,12 @@ object Tweets extends Service {
       // Save tweets created in session
       .exec(session => {
         val keyName = "newTweets"
+        val tweetId = session("newTweetId").as[String]
         if (!session.contains(keyName)) {
-          session.set(keyName, Seq[String]())
+          session.set(keyName, Seq[String](tweetId))
+        } else {
+          session.set(keyName, session(keyName).as[Seq[String]] :+ tweetId)
         }
-        var newTweets = session(keyName).as[Seq[String]]
-        newTweets = newTweets :+ session("newTweetId").as[String]
-        session.set(keyName, newTweets)
       })
   }
 

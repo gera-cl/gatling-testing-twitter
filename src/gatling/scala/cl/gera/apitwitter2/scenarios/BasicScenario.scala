@@ -15,7 +15,7 @@ object BasicScenario {
   private val selectedTweet = "#{selectedTweet}"
 
   def default(networkRepetitions: Int = 1, timelineRepetitions: Int = 1): ScenarioBuilder =
-    scenario("Usual Scenario")
+    scenario("Basic Scenario")
       .exec(Users.me())
       .group("Network") {
         repeat(networkRepetitions) {
@@ -25,7 +25,7 @@ object BasicScenario {
             .exec(Users.follow(myUserId, targetUserId))
         }
       }
-      .group("Home Timeline") {
+      .group("Timeline") {
         exec(Users.getReverseChronologicalTimeline(myUserId))
           .repeat(timelineRepetitions) {
             exec(session => {

@@ -1,29 +1,33 @@
 package cl.gera.apitwitter2.auth
 
 import cl.gera.apitwitter2.core.Properties
-import java.net.URI
-import java.net.http.HttpResponse.BodyHandlers
-import java.net.http.{HttpClient, HttpRequest}
+import okhttp3.{Headers, MediaType, OkHttpClient, Request, RequestBody}
 
 object GithubSecrets {
   private val baseUrl = Properties.Github.baseUrl
   private val repo = Properties.Github.repo
   private val path = s"/repos/$repo/actions"
-  private val httpClient = HttpClient.newBuilder().build()
+  private val client = new OkHttpClient();
+  private val JSON = MediaType.get("application/json; charset=utf-8");
 
   def createOrModifySecret(secretName: String, secretValue: String, keyId: String): Unit = {
-    val request = HttpRequest.newBuilder()
-      .uri(new URI(s"$baseUrl$path/secrets/$secretName"))
-      .headers(
-        "Content-Type", "application/json",
-        "Accept", "application/vnd.github+json",
-        "Authorization", s"Bearer ${Properties.Github.token}"
-      )
-      .PUT(HttpRequest.BodyPublishers.ofString(s"""{"encrypted_value":"$secretValue","key_id":"$keyId"}"""))
+    val headers = new Headers.Builder()
+      .add("Accept", "application/vnd.github+json")
+      .add("Authorization", s"Bearer ${Properties.Github.token}")
       .build()
-    val response = httpClient.send(request, BodyHandlers.ofString())
-    val statusCode = response.statusCode()
-    val responseBodyAsString = response.body()
+
+    val body = RequestBody.create(s"""{"encrypted_value":"$secretValue","key_id":"$keyId"}""", JSON);
+
+    val request = new Request.Builder()
+      .url(s"$baseUrl$path/secrets/$secretName")
+      .headers(headers)
+      .put(body)
+      .build();
+
+    val response = client.newCall(request).execute()
+    val statusCode = response.code()
+    val responseBodyAsString = response.body().string()
+
     if (!Array(201, 204).contains(statusCode))
       throw new RuntimeException(s"Unexpected status $statusCode creating Github Secret.\n(response body: $responseBodyAsString)")
   }

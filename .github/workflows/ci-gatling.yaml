@@ -35,4 +35,5 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(__dirname)
+            const script = require('./script.js')
+            console.log(script({github, context}))

@@ -28,10 +28,11 @@ function formatStats(content) {
     if (content.type === 'GROUP') {
         for (const subContent in content.contents) {
             if (Object.prototype.hasOwnProperty.call(content.contents, subContent)) {
+                const formattedStats = formatStats(content.contents[subContent]);
                 if (content.name === 'All Requests') {
-                    stats = stats.concat(formatStats(content.contents[subContent]))
+                    stats = stats.concat(formattedStats)
                 } else {
-                    stats[stats.length - 1].subContent.push(formatStats(content.contents[subContent]));
+                    stats[stats.length - 1].subContent = stats[stats.length - 1].subContent.concat(formattedStats);
                 }
             }
         }

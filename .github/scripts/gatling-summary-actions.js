@@ -34,6 +34,7 @@ const createSummary = async ({ core }) => {
 
         const formattedStats = formatter.formatStats(stats);
         for (const line in formattedStats) {
+            console.log(line)
             tableContent.push(formatLine(line));
             if (line.subContent !== 0) {
                 for (const subContent in line.subContent) {

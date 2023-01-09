@@ -13,6 +13,7 @@ const createSummary = async ({ core }) => {
 
     for (const run of lastRuns) {
         const stats = JSON.parse(fs.readFileSync(`${reportsDirectory}/${run}/js/stats.json`).toString());
+        console.log(stats)
         let tableContent = [
             [
                 { data: 'Request', header: true },
@@ -34,7 +35,6 @@ const createSummary = async ({ core }) => {
 
         const formattedStats = formatter.formatStats(stats);
         for (const line in formattedStats) {
-            console.log(line)
             tableContent.push(formatLine(line));
             if (line.subContent !== 0) {
                 for (const subContent in line.subContent) {

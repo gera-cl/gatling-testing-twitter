@@ -16,24 +16,24 @@ jobs:
       GH_REPOSITORY_KEY_ID: ${{ secrets.GH_REPOSITORY_KEY_ID }}
     steps:
       - uses: actions/checkout@v3
-#      - name: Set up JDK 11
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: '11'
-#          distribution: 'adopt'
-#      - name: Set up Gradle
-#        uses: gradle/gradle-build-action@v2
-#      - name: Twitter authentication
-#        run: ./gradlew runAuthApp
-#      - name: Update Twitter env vars
-#        run: |
-#          echo "TW_ACCESS_TOKEN=$(cat tw_access_token)" >> $GITHUB_ENV
-#          echo "TW_REFRESH_TOKEN=$(cat tw_refresh_token)" >> $GITHUB_ENV
-#      - name: Run Gatling Tests
-#        run: ./gradlew gatlingRun-cl.gera.apitwitter2.simulations.BasicSimulation
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Set up Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Twitter authentication
+        run: ./gradlew runAuthApp
+      - name: Update Twitter env vars
+        run: |
+          echo "TW_ACCESS_TOKEN=$(cat tw_access_token)" >> $GITHUB_ENV
+          echo "TW_REFRESH_TOKEN=$(cat tw_refresh_token)" >> $GITHUB_ENV
+      - name: Run Gatling Tests
+        run: ./gradlew gatlingRun-cl.gera.apitwitter2.simulations.BasicSimulation
       - name: Generate Job Summary
         uses: actions/github-script@v6
         with:
           script: |
-            const script = require('./.github/workflows/script.js')
-            console.log(script({github, context}))
+            const createSummary = require('./.github/scripts/gatling-summary-actions.js')
+            createSummary({ core })

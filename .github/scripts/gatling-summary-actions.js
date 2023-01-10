@@ -34,10 +34,10 @@ const createSummary = async ({ core }) => {
 
         const formattedStats = formatter.formatStats(stats);
         for (const line of formattedStats) {
-            tableContent.push(formatLine(line));
+            tableContent.push(formatLine(line, 1));
             if (line.subContent !== 0) {
                 for (const subContent of line.subContent) {
-                    tableContent.push(formatLine(subContent));
+                    tableContent.push(formatLine(subContent, 2));
                 }
             }
         }
@@ -50,10 +50,9 @@ const createSummary = async ({ core }) => {
     }
 }
 
-const formatLine = (line) => {
-    const hasSubContent = line.subContent.length !== 0;
+const formatLine = (line, level) => {
     return [
-        hasSubContent ? `<strong>${line.name}</strong>` : `&emsp;${line.name}`,
+        level === 1 ? `<strong>${line.name}</strong>` : `&emsp;${line.name}`,
         line.numberOfRequests.total.toString(),
         line.numberOfRequests.ok.toString(),
         line.numberOfRequests.ko.toString(),

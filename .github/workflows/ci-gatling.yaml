@@ -31,3 +31,9 @@ jobs:
           echo "TW_REFRESH_TOKEN=$(cat tw_refresh_token)" >> $GITHUB_ENV
       - name: Run Gatling Tests
         run: ./gradlew gatlingRun-cl.gera.apitwitter2.simulations.BasicSimulation
+      - name: Generate Job Summary
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const createSummary = require('./.github/scripts/gatling-summary-actions.js')
+            createSummary({ core })

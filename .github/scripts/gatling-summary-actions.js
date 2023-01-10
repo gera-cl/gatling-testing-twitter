@@ -53,7 +53,7 @@ const createSummary = async ({ core }) => {
 const formatLine = (line) => {
     const hasSubContent = line.subContent.length !== 0;
     return [
-        hasSubContent ? `**${line.name}**` : `    ${line.name}`,
+        hasSubContent ? `<strong>${line.name}</strong>` : `${line.name}`,
         line.numberOfRequests.total.toString(),
         line.numberOfRequests.ok.toString(),
         line.numberOfRequests.ko.toString(),

@@ -2,7 +2,9 @@ name: Gatling CI
 
 on:
   push:
-    branches: ["main", "github-actions"]
+    branches:
+      - main
+      - github-actions
   workflow_dispatch:
 
 permissions:

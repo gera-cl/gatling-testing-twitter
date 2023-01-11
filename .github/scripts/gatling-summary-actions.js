@@ -42,8 +42,16 @@ const createSummary = async ({ core }) => {
             }
         }
 
+        console.log(process.env.PAGE_URL)
+        console.log(process.env)
+        const GITHUB_REPOSITORY_PARTS = process.env.GITHUB_REPOSITORY.split("/");
+        const GITHUB_USER = GITHUB_REPOSITORY_PARTS[0]
+        const GITHUB_REPOSITORY_NAME = GITHUB_REPOSITORY_PARTS[1]
+        const reportUrl = `https://${GITHUB_USER}.github.io/${GITHUB_REPOSITORY_NAME}/gatling/${run}/`
+
         await core.summary
             .addHeading(`Results for ${run}`)
+            .addQuote(`Full Report: ${reportUrl}`)
             .addTable(tableContent)
             .addQuote('All times are in millisecond (ms). RPS means "Requests per Second"')
             .write()

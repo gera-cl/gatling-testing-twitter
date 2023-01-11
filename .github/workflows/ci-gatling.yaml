@@ -28,6 +28,8 @@ jobs:
       GH_REPOSITORY: ${{ github.repository }}
       GH_REPOSITORY_PUBLIC_KEY: ${{ secrets.GH_REPOSITORY_PUBLIC_KEY }}
       GH_REPOSITORY_KEY_ID: ${{ secrets.GH_REPOSITORY_KEY_ID }}
+      # Test
+      PAGE_URL: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11

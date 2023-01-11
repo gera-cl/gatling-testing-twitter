@@ -42,7 +42,6 @@ const createSummary = async ({ core }) => {
             }
         }
 
-        console.log(process.env.PAGE_URL)
         console.log(process.env)
         const GITHUB_REPOSITORY_PARTS = process.env.GITHUB_REPOSITORY.split("/");
         const GITHUB_USER = GITHUB_REPOSITORY_PARTS[0]

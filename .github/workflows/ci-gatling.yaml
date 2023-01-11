@@ -51,6 +51,10 @@ jobs:
           script: |
             const createSummary = require('./.github/scripts/gatling-summary-actions.js')
             createSummary({ core })
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './build/reports'
   deploy:
     needs: gatling-test
     environment:
@@ -58,14 +62,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: './build/reports'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1

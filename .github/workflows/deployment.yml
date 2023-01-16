@@ -24,4 +24,5 @@ jobs:
         uses: actions/checkout@v3
       - name: List directory
         run: |
-          ls -la _site
+          ls -la .
+          ls -la ~

@@ -19,5 +19,7 @@ concurrency:
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    with: |
-      ls -la _site
+    steps:
+      - name: List directory
+        with: |
+          ls -la _site

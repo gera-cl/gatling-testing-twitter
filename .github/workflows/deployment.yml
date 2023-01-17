@@ -15,11 +15,12 @@ jobs:
         run: |
           mkdir public
           cd public
-          echo "<h1>Hola Mundo</h1>" > hola.html
+          echo "<h1>Hola Mundo</h1>" > index.html
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           external_repository: gera-cl/gera-cl.github.io
+          keep_files: true
           publish_branch: main
           publish_dir: ./public

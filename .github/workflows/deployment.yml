@@ -15,7 +15,7 @@ jobs:
         run: |
           mkdir public
           cd public
-          echo "<h1>Hola Mundo</h1>" > index.html
+          echo "<h1>Hola Mundo</h1>" > hola.html
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

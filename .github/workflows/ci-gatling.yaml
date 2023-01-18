@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: gatling-report
-          path: /build/reports
+          path: ./build/reports
   deploy:
     needs: gatling-test
     runs-on: ubuntu-latest

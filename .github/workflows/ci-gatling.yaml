@@ -52,13 +52,22 @@ jobs:
             const createSummary = require('./.github/scripts/gatling-summary-actions.js')
             createSummary({ core })
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
-          path: './build/reports'
+          name: gatling-report
+          path: /build/reports
   deploy:
     needs: gatling-test
     runs-on: ubuntu-latest
     steps:
-      - name: Deployment Test
-        run: |
-          ls -la $RUNNER_TEMP
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: gatling-report
+          path: report
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          keep_files: true
+          publish_dir: report

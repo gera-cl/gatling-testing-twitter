@@ -57,6 +57,7 @@ jobs:
           path: './build/reports'
   deploy:
     needs: gatling-test
+    runs-on: ubuntu-latest
     steps:
       - name: Deployment Test
         run: |

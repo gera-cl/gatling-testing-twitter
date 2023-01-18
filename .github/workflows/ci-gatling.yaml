@@ -57,11 +57,7 @@ jobs:
           path: './build/reports'
   deploy:
     needs: gatling-test
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+      - name: Deployment Test
+        run: |
+          ls -la $RUNNER_TEMP

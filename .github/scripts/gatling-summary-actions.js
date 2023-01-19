@@ -1,14 +1,12 @@
 const fs = require('fs')
 const formatter = require('./gatling-stats-formatter')
 
-const reportsDirectory = './build/reports/gatling'
-
 const getDirectories = source =>
     fs.readdirSync(source, { withFileTypes: true })
         .filter(dirent => dirent.isDirectory())
         .map(dirent => dirent.name)
 
-const createSummary = async ({ core }) => {
+const createSummary = async (core, reportsDirectory) => {
     const lastRuns = getDirectories(reportsDirectory)
 
     for (const run of lastRuns) {
@@ -50,7 +48,7 @@ const createSummary = async ({ core }) => {
 
         await core.summary
             .addHeading(`Results for ${run}`)
-            .addQuote(`Full Report: ${reportUrl}`)
+            .addQuote(`<a href="${reportUrl}">Full Report</a>`)
             .addTable(tableContent)
             .addQuote('All times are in millisecond (ms). RPS means "Requests per Second"')
             .write()

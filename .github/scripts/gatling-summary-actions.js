@@ -48,7 +48,7 @@ const createSummary = async (core, reportsDirectory) => {
 
         await core.summary
             .addHeading(`Results for ${run}`)
-            .addQuote(`<a href="${reportUrl}">Full Report</a>`)
+            .addQuote(`<a href="${reportUrl}" target="_blank" rel="noopener noreferrer">Full Report</a>`)
             .addTable(tableContent)
             .addQuote('All times are in millisecond (ms). RPS means "Requests per Second"')
             .write()

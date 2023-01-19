@@ -1,14 +1,12 @@
 const fs = require('fs')
 const formatter = require('./gatling-stats-formatter')
 
-const reportsDirectory = './build/reports/gatling'
-
 const getDirectories = source =>
     fs.readdirSync(source, { withFileTypes: true })
         .filter(dirent => dirent.isDirectory())
         .map(dirent => dirent.name)
 
-const createSummary = async ({ core }) => {
+const createSummary = async (core, reportsDirectory) => {
     const lastRuns = getDirectories(reportsDirectory)
 
     for (const run of lastRuns) {
@@ -42,8 +40,15 @@ const createSummary = async ({ core }) => {
             }
         }
 
+        console.log(process.env)
+        const GITHUB_REPOSITORY_PARTS = process.env.GITHUB_REPOSITORY.split("/");
+        const GITHUB_USER = GITHUB_REPOSITORY_PARTS[0]
+        const GITHUB_REPOSITORY_NAME = GITHUB_REPOSITORY_PARTS[1]
+        const reportUrl = `https://${GITHUB_USER}.github.io/${GITHUB_REPOSITORY_NAME}/gatling/${run}/`
+
         await core.summary
             .addHeading(`Results for ${run}`)
+            .addQuote(`<a href="${reportUrl}" target="_blank" rel="noopener noreferrer">Full Report</a>`)
             .addTable(tableContent)
             .addQuote('All times are in millisecond (ms). RPS means "Requests per Second"')
             .write()

@@ -1,6 +1,11 @@
 name: Gatling CI
 
-on: [ workflow_dispatch ]
+on:
+  push:
+    branches:
+      - main
+      - github-actions
+  workflow_dispatch:
 
 jobs:
   gatling-test:
@@ -31,9 +36,33 @@ jobs:
           echo "TW_REFRESH_TOKEN=$(cat tw_refresh_token)" >> $GITHUB_ENV
       - name: Run Gatling Tests
         run: ./gradlew gatlingRun-cl.gera.apitwitter2.simulations.BasicSimulation
-      - name: Generate Job Summary
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: gatling-report
+          path: ./build/reports
+      - name: Generate Summary
         uses: actions/github-script@v6
         with:
           script: |
             const createSummary = require('./.github/scripts/gatling-summary-actions.js')
-            createSummary({ core })
+            createSummary(core, './build/reports/gatling')
+  deploy:
+    needs: gatling-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: gatling-report
+          path: report
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          keep_files: true
+          publish_dir: report

@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - github-actions
+      - gh-actions
   workflow_dispatch:
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
           echo "TW_REFRESH_TOKEN=$(cat tw_refresh_token)" >> $GITHUB_ENV
       - name: Run Gatling Tests
         run: ./gradlew gatlingRun-cl.gera.apitwitter2.simulations.BasicSimulation
-      - name: Upload artifact
+      - name: Upload report as artifact
         uses: actions/upload-artifact@v3
         with:
           name: gatling-report
@@ -52,6 +52,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -60,9 +65,25 @@ jobs:
         with:
           name: gatling-report
           path: report
-      - name: Deploy
+      - name: Add content to branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           keep_files: true
+          publish_branch: gh-pages
           publish_dir: report
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: .
+          name: github-pages
+          retention-days: 1
+      - name: Deploy artifact
+        id: deployment
+        uses: actions/deploy-pages@v1
+          
+        

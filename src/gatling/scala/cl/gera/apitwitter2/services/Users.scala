@@ -64,12 +64,6 @@ object Users extends Service {
       http("User Tweet timeline")
         .get(s"$path/$userId/tweets")
         .check(status.is(200))
-        .checkIf(findAll) {
-          jsonPath("""$.data[*].id""").findAll.saveAs("tweetsIds")
-        }
-        .checkIf(findRandom) {
-          jsonPath("""$.data[*].id""").findRandom.saveAs("tweetId")
-        }
     ).exitHereIfFailed
   }
 

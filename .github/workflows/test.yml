@@ -1,11 +1,6 @@
-name: Gatling CI
+name: Gatling Tests
 
-on:
-  push:
-    branches:
-      - main
-      - gh-actions
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   gatling-test:
